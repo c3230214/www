@@ -1,13 +1,13 @@
 body{
-    background-color: lightblue;
+    background-color: rgba(151, 184, 198, 0)
 }
 
 h1 {
-    color:greenyellow;
+    color:rgb(112, 237, 103);
 }
 
 h2 {
-    color:lightskyblue;
+    color:rgb(14, 144, 226);
 }
 
 table {
