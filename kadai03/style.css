@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(158, 216, 240)
+    background-color: rgb(158, 216, 240);
 }
 
 h1 {
@@ -15,9 +15,9 @@ table {
 }
 
 th {
-    background-color: #c9cbcd;
+    background-color: #e1e3e4;
 }
 
 th,td {
-    border: 1px solid rgb(160 160 160);
+    border: 1px solid rgb(230, 227, 227);
 }
