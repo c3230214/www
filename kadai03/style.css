@@ -1,9 +1,9 @@
 body {
-    background-color: rgb(158, 216, 240);
+    background-color: rgb(204, 239, 253);
 }
 
 h1 {
-    color:rgb(106, 182, 101);
+    color:rgb(85, 186, 77);
 }
 
 h2 {
@@ -11,7 +11,7 @@ h2 {
 }
 
 table {
-    width: 60%;
+    width: 30%;
     border-collapse: collapse;
 }
 
