@@ -10,6 +10,10 @@ h2 {
     color:rgb(13, 148, 232);
 }
 
+li {
+    color: #ff9696;
+}
+
 table {
     width: 30%;
     border-collapse: collapse;
