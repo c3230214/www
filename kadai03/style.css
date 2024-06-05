@@ -1,3 +1,15 @@
+body{
+    background-color: lightblue;
+}
+
+h1 {
+    color:greenyellow;
+}
+
+h2 {
+    color:lightskyblue;
+}
+
 table {
     border-collapse: collapse;
 }
