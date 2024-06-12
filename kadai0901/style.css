@@ -4,8 +4,7 @@ body {
 
 .box1 {
     background-color: #e6f7ff;
-    border: #333;
-    border-width: 2px;
+    border: 2px solid #333;
     padding: 20px;
     margin: 20px 0;
     border-radius: 10px;
@@ -13,7 +12,7 @@ body {
 
 .box2 {
     background-color: #fff2e6;
-    border: #333;
+    border: 2px solid #333;
     border-width: 2px;
     padding: 20px;
     margin: 20px 0;
@@ -23,7 +22,7 @@ body {
 
 .box3 {
     background-color: #f9e6ff;
-    border: #333;
+    border: 2px dashed #333;
     border-width: 2px;
     padding: 20px;
     margin: 20px 0;
