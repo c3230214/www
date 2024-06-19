@@ -1,5 +1,12 @@
+.circle {
+ color: rgb(170, 240, 130);
+ border-radius: 50%;
+ width: 30px;
+ height: 30px;
+}
+
 h1.q1:before {
- background: rgb(149, 241, 168);
+ background: rgb(170, 240, 130);
  border-radius: 50%;
  width: 30px;
  height: 30px;
