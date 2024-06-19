@@ -1,5 +1,6 @@
-h1.q1:before {
- background: #5bdb9e;
+h1.q1::before {
+ background-color: #5bdb9e;
+
  border-radius: 50%;
  width: 30px;
  height: 30px;
