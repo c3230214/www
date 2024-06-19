@@ -1,9 +1,9 @@
 h1.q1::before {
- background-color: #5bdb9e;
-
+ content: "●";
+ content: #5bdb9e;
  border-radius: 50%;
- width: 30px;
- height: 30px;
+ width: 20px;
+ height: 20px;
 }
 
 body {
