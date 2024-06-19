@@ -1,9 +1,10 @@
-h1.q1::before {
- content: "●";
- content: #5bdb9e;
- border-radius: 50%;
- width: 20px;
- height: 20px;
+h1.q1
+ &::before {
+  content: "●";
+  content: #5bdb9e;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
 }
 
 body {
