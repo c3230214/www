@@ -1,8 +1,8 @@
 h1.q1:before {
-    background: rgb(149, 241, 168);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+ background: rgb(149, 241, 168);
+ border-radius: 50%;
+ width: 50px;
+ height: 50px;
 }
 
 body {
