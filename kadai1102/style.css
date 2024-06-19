@@ -1,5 +1,11 @@
-h1.q2 {
- 
+h1.q2::after {
+ position: absolute;
+ width: 0;
+ height: 0;
+ display: block;
+ border-style: solid;
+ border-color: red green blue orange;
+ border-width: 40px;
 }
 
 body {
