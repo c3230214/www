@@ -6,10 +6,10 @@
     .section1, .section2 {
         flex: 1;
         margin-right: 15px;
+        margin-bottom: 15px;
     }
     .section2 {
         margin-right: 0;
-        margin-bottom: 15px;
     }
 }
 
