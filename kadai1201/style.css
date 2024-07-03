@@ -2,6 +2,9 @@
     .container {
         display: flex;
     }
+    .section1, .section2 {
+        flex: 1;
+    }
 }
 
 body {
