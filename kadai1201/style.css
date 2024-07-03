@@ -3,14 +3,6 @@
         display: flex;
         justify-content: space-between;
     }
-    .section1, .section2 {
-        flex: 1;
-        margin-right: 15px;
-        margin-bottom: 15px;
-    }
-    .section2 {
-        margin-right: 0;
-    }
 }
 
 body {
@@ -20,6 +12,7 @@ body {
 .section1 {
     background-color: #e6f7ff;
     padding: 20px;
+    margin: 20px 0;
     border-radius: 5px;
     box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
 }
@@ -27,6 +20,7 @@ body {
 .section2 {
     background-color: #fff2e6;
     padding: 20px;
+    margin: 20px 0;
     border-radius: 5px;
     box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
 }
