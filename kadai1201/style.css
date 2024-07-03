@@ -1,9 +1,14 @@
 @media screen and (min-width: 980px) { 
     .container {
         display: flex;
+        justify-content: space-between;
     }
     .section1, .section2 {
         flex: 1;
+        margin-right: 10px;
+    }
+    .section2 {
+        margin-right: 0;
     }
 }
 
