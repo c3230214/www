@@ -1,7 +1,6 @@
 @media screen and (min-width: 980px) { 
     .container {
         display: flex;
-        justify-content: space-between;
     }
 }
 
@@ -12,7 +11,7 @@ body {
 .section1 {
     background-color: #e6f7ff;
     padding: 20px;
-    margin: 20px 0;
+    margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
 }
@@ -20,7 +19,7 @@ body {
 .section2 {
     background-color: #fff2e6;
     padding: 20px;
-    margin: 20px 0;
+    margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
 }
@@ -28,7 +27,7 @@ body {
 .section3 {
     background-color: #f9e6ff;
     padding: 20px;
-    margin: 20px 0;
+    margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
 }
