@@ -6,6 +6,7 @@ h1 {
     color: white;
     background-color: black;
     padding: 20px;
+    text-align: center;
 }
 
 .section1 {
@@ -48,5 +49,6 @@ img {
 footer {
     color: white;
     background-color: black;
+    padding: 20px;
     text-align: center;
 }
