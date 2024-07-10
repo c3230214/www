@@ -7,6 +7,7 @@ h1 {
     background-color: black;
     padding: 20px;
     text-align: center;
+    margin: 0;
 }
 
 .section1 {
@@ -51,4 +52,5 @@ footer {
     background-color: black;
     padding: 20px;
     text-align: center;
+    margin: 0;
 }
