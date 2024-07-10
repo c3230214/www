@@ -2,6 +2,10 @@ body {
     background-color: rgb(223, 241, 247);
 }
 
+h1 {
+    background-color: black;
+}
+
 .section1 {
     background-color: #e6f7ff;
     padding: 20px;
