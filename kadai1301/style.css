@@ -5,26 +5,28 @@
 }
 
 .section1, .section2, .section3, .section4 {
-    flex: 1 0 21%;
+    flex: 1 0 100%;
     margin: 1%;
+}
+
+@media (min-width: 600px) {
+    .section1, .section2, .section3, .section4 {
+        flex: 1 0 46%;
+    }
+}
+
+@media (min-width: 900px) {
+    .section1, .section2, .section3, .section4 {
+        flex: 1 0 21%;
+    }
 }
 
 @media (max-width: 600px) {
     h1, footer {
         padding: 10px;
     }
-
-    .section1, .section2, .section3, .section4 {
-        flex: 1 0 100%;
-    }
 }
 
-@media screen and (min-width: 980px) { 
-    .container {
-        display: flex;
-        justify-content: space-between;
-    }
-}
 
 body {
     background-color: rgb(223, 241, 247);
