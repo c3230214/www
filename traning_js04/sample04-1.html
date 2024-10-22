@@ -12,26 +12,31 @@
     <button onclick="subtract()">引き算</buttton>
     <button onclick="multiply()">掛け算</buttton>
     <button onclick="divide()">割り算</buttton>
-    <script>
-        let a = 10;
-        let b = 4;
-        let answer = 0;
-        function add() {
-            answer = a + b;
-            alert('答えは' + answer + 'です');
-        }
-        function subtract() {
-            answer = a - b;
-            alert('答えは' + answer + 'です');
-        }
-        function multiply() {
-            answer = a * b;
-            alert('答えは' + answer + 'です');
-        }
-        function divide() {
-            answer = a / b;
-            alert('答えは' + answer + 'です');
-        }
-    </script>
+        <style>
+            button {
+                margin-right: 5px;
+            }
+        </style>
+        <script>
+            let a = 10;
+            let b = 4;
+            let answer = 0;
+            function add() {
+                answer = a + b;
+                alert('答えは' + answer + 'です');
+            }
+            function subtract() {
+                answer = a - b;
+                alert('答えは' + answer + 'です');
+            }
+            function multiply() {
+                answer = a * b;
+                alert('答えは' + answer + 'です');
+            }
+            function divide() {
+                answer = a / b;
+                alert('答えは' + answer + 'です');
+            }
+        </script>
 </body>
 </html>
