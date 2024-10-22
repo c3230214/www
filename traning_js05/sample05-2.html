@@ -7,7 +7,28 @@
 </head>
 <body>
     <h1>利用料の計算</h1>
-    <p>a=10、b=4の場合</p>
+    <table>
+        <tbody>
+            <tr>
+                <th>No.</th>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <th>料金(a)</th>
+                <td>500</td>
+                <td>980</td>
+                <td>1200</td>
+            </tr>
+            <tr>
+                <th>料金(b)</th>
+                <td>10</td>
+                <td>16</td>
+                <td>8</td>
+            </tr>
+        </tbody>
+    </table>
     <button onclick="multiply_0()">利用料の合計</buttton>
     <button onclick="multiply_1()">利用料の合計</buttton>
     <button onclick="multiply_2()">利用料の合計</buttton>
@@ -22,15 +43,15 @@
             let answer = 0;
             function multiply_0() {
                 answer = a[0] * b[0];
-                alert('料金は' + answer + 'です');
+                alert('料金は' + answer + '円です');
             }
             function multiply_1() {
                 answer = a[1] * b[1];
-                alert('料金は' + answer + 'です');
+                alert('料金は' + answer + '円です');
             }
             function multiply_2() {
                 answer = a[2] * b[2];
-                alert('料金は' + answer + 'です');
+                alert('料金は' + answer + '円です');
             }
         </script>
 </body>
