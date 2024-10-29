@@ -9,17 +9,26 @@
             color: red;
             font-weight: bold;
         }
+        .black-bold {
+            color: black;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <h1>座席の予約</h1>
-    <p>東京会場</p>
-    <p id="text" class="red-text">（予約受付中）</p>
-    <button onclick="changeText()">予約する</button>
+    <p>東京会場</p><p id="text" class="red-text">（予約受付中）</p>
+    <button id="reserveButton" onclick="changeText()">予約する</button>
     <script>
         function changeText() {
             const textElement = document.getElementById("text");
+            const button = document.getElementById("reserveButton");
             textElement.textContent = '（予約済み）';
+            button.style.display = 'none';
+            const thankYouMessage = document.createElement("p");
+            thankYouMessage.textContent = "ありがとうございました。";
+            thankYouMessage.className = "black-bold";
+            document.body.appendChild(thankYouMessage);
         }
     </script>
 </body>
