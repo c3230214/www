@@ -6,63 +6,15 @@
     <title>変数の利用</title>
 </head>
 <body>
-    <h1>利用料の計算</h1>
-    <table>
-        <tbody>
-            <tr>
-                <th>No.</th>
-                <td>料金(a)</td>
-                <td>料金(b)</td>
-                <td>a×b</td>
-            </tr>
-            <tr>
-                <th>0</th>
-                <td>500</td>
-                <td>10</td>
-                <td><button onclick="multiply_0()">利用料の合計</buttton></td>
-            </tr>
-            <tr>
-                <th>1</th>
-                <td>980</td>
-                <td>16</td>
-                <td><button onclick="multiply_1()">利用料の合計</buttton></td>
-            </tr>
-            <tr>
-                <th>2</th>
-                <td>1200</td>
-                <td>8</td>
-                <td><button onclick="multiply_2()">利用料の合計</buttton></td>
-            </tr>
-        </tbody>
-    </table>
+    <h1>座席の予約</h1>
+        <p>東京会場</p>
+        <p></p>
+        <button>予約する</button>
         <style>
-            th,td {
-                border: solid 3px;
-                padding: 5px;
-            }
-            table {
-                border-collapse: collapse;
-            }
-            tr {
-                color: gray;
-            }
+            .button 
         </style>
         <script>
-            let a = [500,980,1200];
-            let b = [10,16,8];
-            let answer = 0;
-            function multiply_0() {
-                answer = a[0] * b[0];
-                alert('料金は' + answer + '円です');
-            }
-            function multiply_1() {
-                answer = a[1] * b[1];
-                alert('料金は' + answer + '円です');
-            }
-            function multiply_2() {
-                answer = a[2] * b[2];
-                alert('料金は' + answer + '円です');
-            }
+            
         </script>
 </body>
 </html>
