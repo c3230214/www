@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>変数の利用</title>
+    <style>
+        .red-text {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <h1>座席の予約</h1>
-        <p>東京会場</p>
-        <p></p>
-        <button>予約する</button>
-        <style>
-            .button 
-        </style>
-        <script>
-            
-        </script>
+    <p id="text" class="red-text">（予約受付中）</p>
+    <button onclick="changeText()">予約する</button>
+    <script>
+        function changeText() {
+            const textElement = document.getElementById("text");
+            textElement.innerHTML = '<span class="red-text">（予約済み）</span>';
+        }
+    </script>
 </body>
 </html>
