@@ -13,12 +13,15 @@
         <li class="Flag" data="images/flag_USA.png">アメリカ</li>
         <li class="Flag" data="images/flag_IDN.png">インドネシア</li>
     </ol>
-    <button id="reserveButton" onclick="changeText()">国旗で表示</button>
+    <button id="reserveButton" onclick="changeImage()">国旗で表示</button>
     <script>
         function changeImage() {
-            const button = document.getElementById("reserveButton");
-            country.innerHTML = `<img src="${flagUrl}" style="width: 50px; height: 30px;">`;
-            };
+            const countries = document.querySelectorAll(".Flag");
+            countries.forEach(country => {
+                const flagUrl = country.getAttribute("data");
+                country.innerHTML = `<img src="${flagUrl}" style="width: 50px; height: 30px;">`;
+            });
+        }
     </script>
 </body>
 </html>
