@@ -8,8 +8,20 @@
 <body>
     <h1>写真の一覧</h1>
     <p>以下のボタンをクリックすると、写真が一覧表示されます。</p>
-    <button>写真を表示</button>
+    <button class="images" onclick="upImage()">写真を表示</button>
+    <div id="photoList"></div>
     <script>
+        function upImage() {
+            const photoList = document.getElementById('photoList');
+            const images = ['images2/photo_1.jpg', 'images2/photo_2.jpg', 'images2/photo_3.jpg', 'images2/photo_4.jpg', 'images2/photo_5.jpg', 'images2/photo_6.jpg', 'images2/photo_7.jpg', 'images2/photo_8.jpg', 'images2/photo_9.jpg',];
+            images.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;;
+                img.style.width = '200px';
+                img.style.margin = '5px';
+                photoList.appendChild(img);
+            });
+        }
     </script>
 </body>
 </html>
