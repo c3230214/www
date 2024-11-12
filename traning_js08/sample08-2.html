@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>繰り返し処理</title>
+    <title>入場料の一覧</title>
 </head>
 <body>
 <h1>入場料の一覧</h1>
@@ -14,20 +14,20 @@
 
 <script>
 function createTable(){
-    
     // -------------------- ヘッダー行の作成 --------------------
-    let headerRow = '<tr><th></th>';
-    for (let j = 1; j <= 5; j++) {
-        headerRow += '<th>' + j + '</th>';
+    const headers = ["", "大人", "高校生", "中学生", "小学生"];
+    let headerRow = '<tr>';
+    for (let header of headers) {
+        headerRow += '<th>' + header + '</th>';
     }
     headerRow += '</tr>';
     document.getElementById('t_head').insertAdjacentHTML('beforeend', headerRow);
 
     // -------------------- データ部分の作成 --------------------
     for (let i = 1; i <= 6; i++) {
-        let row = '<tr><th>' + i + '</th>';
-        for (let j = 1; j <= 5; j++) {
-            row += '<td>' + (i * j) + '</td>';
+        let row = '<tr><th>' + i + '人</th>';
+        for (let j = 1; j <= 4; j++) {
+            row += '<td>' + (i * j * 100) + '円</td>';
         }
         row += '</tr>';
         document.getElementById('t_body').insertAdjacentHTML('beforeend', row);
