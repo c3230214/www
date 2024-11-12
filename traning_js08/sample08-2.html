@@ -14,11 +14,11 @@
 
 <script>
 function createTable(){
-    const headers = ["", "大人", "高校生", "中学生", "小学生"];
+    
     // -------------------- ヘッダー行の作成 --------------------
     let headerRow = '<tr><th></th>';
     for (let j = 1; j <= 5; j++) {
-        headerRow += '<th>' + j + '人</th>';
+        headerRow += '<th>' + j + '</th>';
     }
     headerRow += '</tr>';
     document.getElementById('t_head').insertAdjacentHTML('beforeend', headerRow);
