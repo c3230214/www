@@ -24,7 +24,7 @@ function createTable(){
     document.getElementById('t_head').insertAdjacentHTML('beforeend', headerRow);
 
     // -------------------- データ部分の作成 --------------------
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 5; i++) {
         let row = '<tr><th>' + i + '人</th>';
         for (let j = 1; j <= 4; j++) {
             row += '<td>' + (i * j * 100) + '円</td>';
