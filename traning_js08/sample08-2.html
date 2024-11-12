@@ -29,6 +29,8 @@ for (let i = 1; i <=9; i++) {
     for (let j = 1; j <=9; j++) {
         let row = '<td>' + i +'</td>';
     }
+    row = row + '</tr>';
+    document.getElementById('t_body').insertAdjacentHTML('beforeend', row);
 }
 }
 </script>
