@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>繰り返し処理</title>
+</head>
+<body>
+<h1>入場料の一覧</h1>
+<table>
+    <thead id="t_head"></thead>
+    <tbody id="t_body"></tbody>
+</table>
+
+<script>
+function createTable(){
+
+// -------------------- ヘッダー行の作成 --------------------
+let row = '<tr><th></th>';
+for (let j = 1; j >=5; j++) {
+    row = row + '<th>' + j + '</th>'
+}
+row = row + '</tr>';
+document.getElementById('t_body').insertAdjacentElement('beforeend', row);
+
+// -------------------- データ部分の作成 --------------------
+
+}
+</script>
+</body>
+</html>
