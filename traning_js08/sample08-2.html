@@ -14,25 +14,25 @@
 
 <script>
 function createTable(){
-
-// -------------------- ヘッダー行の作成 --------------------
-let row = '<tr><th></th>';
-for (let j = 1; j >=5; j++) {
-    row = row + '<th>' + j + '</th>'
-}
-row = row + '</tr>';
-document.getElementById('t_body').insertAdjacentElement('beforeend', row);
-
-// -------------------- データ部分の作成 --------------------
-for (let i = 1; i <=9; i++) {
-    let row = '<tr><th>' + i +'</th>';
-    for (let j = 1; j <=9; j++) {
-        let row = '<td>' + i +'</td>';
+    // -------------------- ヘッダー行の作成 --------------------
+    let headerRow = '<tr><th></th>';
+    for (let j = 1; j <= 5; j++) {
+        headerRow += '<th>' + j + '</th>';
     }
-    row = row + '</tr>';
-    document.getElementById('t_body').insertAdjacentHTML('beforeend', row);
+    headerRow += '</tr>';
+    document.getElementById('t_head').insertAdjacentHTML('beforeend', headerRow);
+
+    // -------------------- データ部分の作成 --------------------
+    for (let i = 1; i <= 6; i++) {
+        let row = '<tr><th>' + i + '</th>';
+        for (let j = 1; j <= 5; j++) {
+            row += '<td>' + (i * j) + '</td>';
+        }
+        row += '</tr>';
+        document.getElementById('t_body').insertAdjacentHTML('beforeend', row);
+    }
 }
-}
+createTable();
 </script>
 </body>
 </html>
