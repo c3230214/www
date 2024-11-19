@@ -8,18 +8,21 @@
 <body>
     <h3>問題</h3>
     <p>最も面積が大きい「県」は何県でしょう？</p>
-    <button id="Button" >ヒントを見る</button>
+    <button id="Button">ヒントを見る</button>
     <p id="Hint">（注意）北海道は「県」ではありません。</p>
 
     <script>
-        function changeButton() {
-            document.getElementById("Button").innerText = "答えを見る";
-            document.getElementById("Hint").innerText = "東北地方にあります。";
-        }
-        function changeButton() {
-            document.getElementById("Hint").innerText = "答えは「岩手県」です。";
-        }
+        let hintCount = 0;
 
+        document.getElementById("Button").addEventListener("click", function() {
+            hintCount++;
+            if (hintCount === 1) {
+                document.getElementById("Button").innerText = "答えを見る";
+                document.getElementById("Hint").innerText = "東北地方にあります。";
+            } else if (hintCount === 2) {
+                document.getElementById("Hint").innerText = "答えは「岩手県」です。";
+            }
+        });
     </script>
 </body>
 </html>
