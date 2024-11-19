@@ -8,7 +8,15 @@
 <body>
     <h3>問題</h3>
     <p>最も面積が大きい「県」は何県でしょう？</p>
-    <button>ヒントを見る</button>
-    <p>（注意）北海道は「県」ではありません。</p>
+    <button id="Button" >ヒントを見る</button>
+    <p id="Hint">（注意）北海道は「県」ではありません。</p>
+
+    <script>
+        function changeButton() {
+            document.getElementById("Button").innerText = "答えを見る";
+            document.getElementById("Hint").innerText = "東北地方にあります。";
+        }
+
+    </script>
 </body>
 </html>
