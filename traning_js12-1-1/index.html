@@ -22,6 +22,12 @@
         function lcm (a, b) {
             return (a * b)
         }
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+        function findLCM(numbers) {
+            return numbers.reduce((a, b) => lcm(a, b), 1);
+        }
         const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         document.getElementById("kekka").addEventListener("click", () => {
             const answer = findLCM(numbers);
