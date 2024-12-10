@@ -9,6 +9,7 @@
             background-color: orange;
             padding: 10px;
             margin-top: 10px;
+            border-right: 20px;
         }
     </style>
 </head>
@@ -18,7 +19,9 @@
     <button id="kekka">結果を見る</button>
     <p id="display">ここに結果が表示されます。</p>
     <script>
-        function lcm (a * b);
+        function lcm (a, b) {
+            return (a * b)
+        }
         const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         document.getElementById("kekka").addEventListener("click", () => {
             const answer = findLCM(numbers);
