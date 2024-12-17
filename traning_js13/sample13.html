@@ -21,9 +21,9 @@
 
     <script>
         document.getElementById("hanni").addEventListener("click", () => {
-            let minNumber = prompt("範囲の最小値を1〜10で入力してください");
-            let maxNumber = prompt("範囲の最大値を1〜10で入力してください");
-            }
+            let minNumber = parseInt(prompt("範囲の最小値を1〜10で入力してください"));
+            let maxNumber = parseInt(prompt("範囲の最大値を1〜10で入力してください"));
+
             function gcd(a, b) {
                 return b === 0 ? a : gcd(b, a % b);
             }
@@ -35,7 +35,7 @@
                 numbers.push(i);
             }
             const result = numbers.reduce((a, b) => lcm(a, b), 1);
-            document.getElementById("display").innerText = `${minNumver}〜${maxNumber}で割り切れる最小の数値は${result}です。`;
+            document.getElementById("display").innerText = `${minNumber}〜${maxNumber}で割り切れる最小の数値は${result}です。`;
         });
     </script>
 </body>
