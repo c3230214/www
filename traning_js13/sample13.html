@@ -20,8 +20,8 @@
     <p id="display">ここに結果が表示されます。</p>
     <script>
         document.getElementById("hanni");
-        alert("範囲の最小値を1〜10で入力してください");
-        alert("範囲の最大値を1〜10で入力してください");
+        let minsuuji = prompt("範囲の最小値を1〜10で入力してください");
+        let maxsuuji = prompt("範囲の最大値を1〜10で入力してください");
         function gcd(a, b) {
             return b === 0 ? a : gcd(b, a % b);
         }
