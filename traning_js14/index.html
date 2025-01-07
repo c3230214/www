@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>プロパティ</title>
     <style>
-        box-border {
-            color: black;
+        div {
+            border-color: black;
         }
     </style>
 </head>
 <body>
     <h1>HTMLの表示</h1>
     <p>ボックス内の表示されている部分のHTMLを表示します。</p>
-    <box id="text"><h3>人口800万人以上の都道府県</h3> <ul> <li>東京都</li> <li>神奈川県</li> <li>大阪府</li> </ul></box>
+    <div id="text"><h3>人口800万人以上の都道府県</h3> <ul> <li>東京都</li> <li>神奈川県</li> <li>大阪府</li> </ul></box>
     <button id="display">HTMLを表示</button>
     <box id="view"><p>ここにHTMLが表示されます。</p></box>
 </body>
 <script>
     document.getElementById("text").addEventListener("display", () => 
+        const
         document.getElementById("view").innerText = `${text}`;
 </script>
 </html>
