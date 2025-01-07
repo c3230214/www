@@ -6,20 +6,30 @@
     <title>プロパティ</title>
     <style>
         div {
-            border-color: black;
+            color: black;
         }
     </style>
 </head>
 <body>
     <h1>HTMLの表示</h1>
     <p>ボックス内の表示されている部分のHTMLを表示します。</p>
-    <div id="text"><h3>人口800万人以上の都道府県</h3> <ul> <li>東京都</li> <li>神奈川県</li> <li>大阪府</li> </ul></div>
+    <div id="text">
+        <h3>人口800万人以上の都道府県</h3>
+        <ul>
+            <li>東京都</li>
+            <li>神奈川県</li>
+            <li>大阪府</li>
+        </ul>
+    </div>
     <button id="display">HTMLを表示</button>
-    <div id="view"><p>ここにHTMLが表示されます。</p></div>
+    <div id="view">
+        <p>ここにHTMLが表示されます。</p>
+    </div>
 </body>
 <script>
-    document.getElementById("text").addEventListener("display", () => 
-        const getElementById("view").innerHTML
-        document.getElementById("view").innerText = `${text}`;
+    document.getElementById("display").addEventListener("click", () => {
+        const textContent = document.getElementById("text").innerHTML;
+        document.getElementById("view").innerText = textContent;
+    });
 </script>
 </html>
