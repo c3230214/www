@@ -5,7 +5,7 @@
   --primary-dark: #005fa3; /* ホバー時の濃いブルー（コントラスト向上） */
 }
 
-* {
+{
   box-sizing: border-box;
 }
 
@@ -36,6 +36,7 @@ button:hover {
   font-size: 18px;
   font-weight: bold;
 }
+
 
 
 
