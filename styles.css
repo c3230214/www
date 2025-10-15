@@ -1,3 +1,17 @@
+:root {
+  --bg: #f2f7fb;       /* 背景色：やさしい水色。紙に印刷しても視認性よし */
+  --text: #333;        /* 文字色：真っ黒(#000)より目に優しい濃いグレー */
+  --primary: #0078d7;  /* 強調色：ボタンなどの基調ブルー */
+  --primary-dark: #005fa3; /* ホバー時の濃いブルー（コントラスト向上） */
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+
 body {
   font-family: "Yu Gothic", "Meiryo", sans-serif;
   text-align: center;
@@ -25,5 +39,6 @@ button:hover {
   font-size: 18px;
   font-weight: bold;
 }
+
 
 
