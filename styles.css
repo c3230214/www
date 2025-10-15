@@ -5,12 +5,9 @@
   --primary-dark: #005fa3; /* ホバー時の濃いブルー（コントラスト向上） */
 }
 
-
 * {
   box-sizing: border-box;
 }
-
-
 
 body {
   font-family: "Yu Gothic", "Meiryo", sans-serif;
@@ -39,6 +36,7 @@ button:hover {
   font-size: 18px;
   font-weight: bold;
 }
+
 
 
 
