@@ -1,4 +1,4 @@
-.body {
+body {
   font-family: "Yu Gothic", "Meiryo", sans-serif;
   text-align: center;
   background: #f2f7fb;
@@ -7,7 +7,7 @@
   padding: 80px 0;
 }
 
-.button {
+button {
   background: #0078d7;
   color: white;
   border: none;
@@ -16,7 +16,7 @@
   cursor: pointer;
 }
 
-.button:hover {
+button:hover {
   background: #005fa3;
 }
 
@@ -25,4 +25,5 @@
   font-size: 18px;
   font-weight: bold;
 }
+
 
