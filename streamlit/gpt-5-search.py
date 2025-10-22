@@ -1,48 +1,45 @@
 import re
 import streamlit as st
-from openai import OpenAI
+from openai import OpenAI, BadRequestError
 
-st.set_page_config(page_title="GPT-5 Search × Streamlit", page_icon="🔎")
+st.set_page_config(page_title="GPT Web検索チャット", page_icon="🔎")
+st.title("🔎 GPT Web検索チャット（Streaming / Reasoning=High）")
 
-st.title("🔎 GPT-5 Web検索チャット（Streaming / High Reasoning）")
-
-# --- 会話ログ ---
+# --- 会話ログと直近の全文 ---
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "_last_full_text" not in st.session_state:
     st.session_state._last_full_text = ""
 
-# --- サイドバー：設定／出典 ---
+# --- サイドバー：設定＆出典 ---
 with st.sidebar:
     st.header("設定")
     model = st.selectbox(
-        "モデル",
+        "モデル（Responses API対応）",
         [
-            "gpt-5",                       # ツール対応の最新モデルを想定
-            "gpt-4o-mini-search-preview", # 検索特化の軽量プレビュー
+            "gpt-4o",        # 安定: web_searchツール＆ストリーミングに対応
+            "gpt-4o-mini",   # 軽量
+            "gpt-5",         # 利用権限がある場合のみ（非対応なら gpt-4o 推奨）
         ],
         index=0,
-        help="ツール（web_search）対応はモデルページで要確認。"
+        help="*注意*: “-search-preview”系は Chat Completions 向けの記述があり、Responses API＋web_searchと相性が悪いケースがあります。"
     )
-    enable_search = st.toggle("ウェブ検索を許可する", value=True)
-    st.caption("検索を許可すると、必要に応じてWeb検索を使います。")
+    enable_search = st.toggle("ウェブ検索を許可（tools=web_search）", value=True)
+    st.caption("モデルが対応していれば、必要に応じてWeb検索が自動で使われます。")
 
     st.markdown("---")
     st.header("出典（自動抽出）")
-    # 出典は直前の最終テキストから抽出して描画（下で更新）
+
     def render_sources(md_text: str):
-        # Markdownリンク形式 [title](url) を優先抽出
+        # [title](url) を優先抽出
         links = re.findall(r"\[([^\]]+)\]\((https?://[^\s)]+)\)", md_text)
-        # プレーンURLの補助抽出
-        urls  = re.findall(r"(?<!\()(?P<url>https?://[^\s\)]+)", md_text)
+        urls = re.findall(r"(?<!\()(?P<url>https?://[^\s\)]+)", md_text)
         seen = set()
-        if links:
-            for title, url in links:
-                if url in seen: 
-                    continue
-                st.markdown(f"- [{title}]({url})")
-                seen.add(url)
-        # 補助：Markdownリンクに含まれなかったURLも掲示
+        for title, url in links:
+            if url in seen: 
+                continue
+            st.markdown(f"- [{title}]({url})")
+            seen.add(url)
         for url in urls:
             if url not in seen:
                 st.markdown(f"- <{url}>")
@@ -50,85 +47,99 @@ with st.sidebar:
 
     render_sources(st.session_state._last_full_text)
 
-# --- 既存メッセージ描画（チャットUI） ---
+# --- 既存ログの描画 ---
 for role, content in st.session_state.messages:
     with st.chat_message("user" if role == "user" else "assistant"):
         st.markdown(content)
 
-# --- OpenAIクライアント ---
+# --- OpenAI クライアント ---
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-# --- System指示（出典を必ず末尾にMarkdownリンクで） ---
+# --- System 指示（出典を必ずMarkdownリンクで） ---
 SYSTEM_HINT = (
     "あなたは日本語のリサーチアシスタントです。必要なときにweb_searchツールを使い、"
     "本文の最後に必ず『出典』として Markdown リンク（[タイトル](URL)）を箇条書きで示してください。"
-    "本文は簡潔に、要点から述べてください。"
+    "本文は簡潔に要点から述べてください。"
 )
 
 # --- 入力欄 ---
-if prompt := st.chat_input("質問を入力（例：『最新の生成AIトレンドを要約して』）"):
+if prompt := st.chat_input("質問を入力（例：『2025年の生成AIトレンドを要約して』）"):
     st.session_state.messages.append(("user", prompt))
     with st.chat_message("user"):
         st.markdown(prompt)
 
     tools = [{"type": "web_search"}] if enable_search else []
+    kwargs_reasoning = {"reasoning": {"effort": "high"}}  # 推論レベル＝強（非対応モデルでは無視・エラー時は後述でフォールバック）
 
-    # ストリーミング吐き出し用のジェネレータ
-    def response_streamer():
-        """
-        OpenAI Responses APIのイベントストリームから本文を逐次取り出し、
-        画面にタイプライタ表示しつつ全文を蓄積してサイドバーで出典抽出に使う。
-        """
-        full_text = []
-        # reasoning: effort='high' を明示（非対応モデルは無視）
-        kwargs = {"reasoning": {"effort": "high"}}  # 推論レベル＝強
+    # --- ストリーミングで本文を描画するジェネレータ ---
+    def stream_once(_model, use_tools=True, use_reasoning=True):
+        full = []
+        extra = {}
+        if use_reasoning:
+            extra.update(kwargs_reasoning)
 
         with client.responses.stream(
-            model=model,
+            model=_model,
             input=[
                 {"role": "system", "content": SYSTEM_HINT},
                 {"role": "user", "content": prompt},
             ],
-            tools=tools,
-            **kwargs,
+            tools=(tools if use_tools else []),
+            **extra,
         ) as stream:
             for event in stream:
-                # 文章のトークン差分（正式イベント名）
                 if event.type == "response.output_text.delta":
                     chunk = event.delta
-                    full_text.append(chunk)
-                    yield chunk  # st.write_stream 用
-                # 応答完了イベント
+                    full.append(chunk)
+                    yield chunk
                 elif event.type == "response.completed":
                     break
-                # エラーをUIに出す
                 elif event.type == "response.error":
                     yield f"\n\n**[エラー]** {getattr(event, 'error', '不明なエラー')}\n"
+        st.session_state._last_full_text = "".join(full)
 
-        # 最終テキストをセッションに保存→サイドバーの出典描画で使用
-        st.session_state._last_full_text = "".join(full_text)
+    # --- 耐障害化：BadRequest のときに段階的に緩める ---
+    def robust_stream():
+        try:
+            # 1) 指定モデル + web_search + reasoning=high
+            yield from stream_once(model, use_tools=True, use_reasoning=True)
+            return
+        except BadRequestError as e:
+            st.toast("BadRequest: パラメータを自動調整して再試行します。", icon="⚠️")
+            # 2) reasoning なしで再試行
+            try:
+                yield from stream_once(model, use_tools=True, use_reasoning=False)
+                return
+            except BadRequestError:
+                # 3) ツール無し（純粋回答）で再試行
+                try:
+                    st.toast("web_searchが非対応の可能性 → ツール無しで再試行", icon="ℹ️")
+                    yield from stream_once(model, use_tools=False, use_reasoning=False)
+                    return
+                except BadRequestError:
+                    # 4) 最終手段: モデルを gpt-4o に切替（多くの環境で安定）
+                    st.warning("選択モデルが Responses+web_search 非対応の可能性。`gpt-4o` で再試行します。")
+                    yield from stream_once("gpt-4o", use_tools=True, use_reasoning=False)
+                    return
 
     with st.chat_message("assistant"):
-        # Streamlit のタイプライタ表示（公式API）でストリーミング描画
-        st.write_stream(response_streamer())  # ← これだけで逐次出力できる
+        st.write_stream(robust_stream())
 
-    # 会話履歴にアシスタント発話（全文）を保存
+    # 履歴に最終テキストを保存
     st.session_state.messages.append(("assistant", st.session_state._last_full_text))
 
-    # サイドバーの出典を更新（最新の全文から抽出）
+    # サイドバーの出典を更新
     with st.sidebar:
         st.markdown("---")
         st.header("出典（自動抽出）")
-        # 上で定義した描画関数を再実行
         links = re.findall(r"\[([^\]]+)\]\((https?://[^\s)]+)\)", st.session_state._last_full_text)
-        urls  = re.findall(r"(?<!\()(?P<url>https?://[^\s\)]+)", st.session_state._last_full_text)
+        urls = re.findall(r"(?<!\()(?P<url>https?://[^\s\)]+)", st.session_state._last_full_text)
         seen = set()
-        if links:
-            for title, url in links:
-                if url in seen: 
-                    continue
-                st.markdown(f"- [{title}]({url})")
-                seen.add(url)
+        for title, url in links:
+            if url in seen:
+                continue
+            st.markdown(f"- [{title}]({url})")
+            seen.add(url)
         for url in urls:
             if url not in seen:
                 st.markdown(f"- <{url}>")
