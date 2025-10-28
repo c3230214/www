@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Googleマップ（複数スポット）</title>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/map.css" />
+</head>
+<body>
+  <main class="container">
+    <h1 class="title">おすすめスポットマップ</h1>
+    <p class="muted">ボタンを押すと地図が切り替わります。</p>
+
+    <section id="spots" class="grid spots">
+      <!-- data-map に各自の埋め込みURLを貼る（1行） -->
+      <button class="spot hover-rise" data-map="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3350.575950596731!2d136.6349834847289!3d35.37671417623264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6003b18795ed85eb%3A0xf9d1a01a8ba594d7!2z5bKQ6Zic55yM56uL5aSn5Z6j5ZWG5qWt6auY562J5a2m5qCh!5e1!3m2!1sja!2sjp!4v1761225066142!5m2!1sja!2sjp">学校周辺</button>
+      <button class="spot hover-rise" data-map="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3350.9883184219916!2d136.61525097574344!3d35.366781847183596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6003b162213027d1%3A0x916dad43dff86f3e!2z5aSn5Z6j6aeF!5e1!3m2!1sja!2sjp!4v1761225191131!5m2!1sja!2sjp">最寄り駅</button>
+      <button class="spot hover-rise" data-map="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3351.1877168855026!2d136.6134799757434!3d35.36197824744545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6003b166c1a37de5%3A0xe3dc1456f519ce25!2z5aSn5Z6j5Z-O!5e1!3m2!1sja!2sjp!4v1761224058024!5m2!1sja!2sjp">観光スポット</button>
+    </section>
+
+    <div class="map-wrap">
+      <iframe id="gmap" src="" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <p style="margin-top:16px"><a class="btn btn-ghost" href="../">← Day2 メニューへ戻る</a></p>
+  </main>
+
+  <script src="../assets/js/map.js"></script>
+</body>
+</html>
