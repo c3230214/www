@@ -1,0 +1,94 @@
+/* ===== map.css（安定表示＋PC／スマホ対応）===== */
+:root {
+  --maxw: 1100px;
+  --radius: 14px;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* マップラッパー：高さ可変で黒画面回避 */
+.map-wrap {
+  position: relative;
+  width: 100%;
+  height: 60vh;          /* 画面高さの6割 */
+  min-height: 420px;     /* スマホでの最低高さ */
+  max-height: 760px;     /* 大画面での上限 */
+  background: #000;      /* 読み込み時の背景 */
+  border-radius: 0;      /* 角丸は iframe 側で適用 */
+  box-shadow: var(--shadow);
+  margin: 10px 0 18px;   /* 下に戻るボタン用の余白 */
+}
+
+/* iframe 自身に角丸を適用（overflow:hiddenは使わない） */
+.map-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  border-radius: var(--radius);
+  background: transparent; /* 読み込み時の黒潰れ防止 */
+}
+
+/* スポット選択ボタン */
+.spots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.spot {
+  background: var(--card, #fff);
+  color: inherit;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, outline-color 0.2s ease;
+}
+
+.spot:hover {
+  transform: translateY(-1px);
+}
+
+.spot.active {
+  outline: 2px solid color-mix(in oklab, #2563eb 45%, #ffffff);
+  outline-offset: 2px;
+}
+
+/* --- 端末別最適化 --- */
+
+/* 小型スマホ縦（例：iPhone SE） */
+@media (max-width: 360px) and (orientation: portrait) {
+  .map-wrap {
+    height: 52vh;
+    min-height: 360px;
+    max-height: 580px;
+  }
+}
+
+/* タブレットやスマホ横 */
+@media (min-width: 600px) {
+  .map-wrap {
+    height: 62vh;
+    min-height: 480px;
+    max-height: 780px;
+  }
+}
+
+/* ノートPC・デスクトップ */
+@media (min-width: 1024px) {
+  .map-wrap {
+    height: 64vh;
+    min-height: 520px;
+    max-height: 820px;
+  }
+}
+
+/* 超ワイド画面 */
+@media (min-width: 1440px) {
+  .map-wrap {
+    max-height: 880px;
+  }
+}
