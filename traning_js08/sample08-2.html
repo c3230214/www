@@ -21,17 +21,19 @@ function createTable(){
         headerRow += '<th>' + header + '</th>';
     }
     headerRow += '</tr>';
-    document.getElementById('t_head').insertAdjacentHTML('beforeend', headerRow);
+    document.getElementById('t_head').innerHTML = headerRow;
 
     // -------------------- データ部分の作成 --------------------
+    let bodyHTML = '';
     for (let i = 1; i <= 5; i++) {
         let row = '<tr><th>' + i + '人</th>';
         for (let j = 1; j <= 4; j++) {
             row += '<td>' + (i * j * 100) + '円</td>';
         }
         row += '</tr>';
-        document.getElementById('t_body').insertAdjacentHTML('beforeend', row);
+        bodyHTML += row;
     }
+    document.getElementById('t_body').innerHTML = bodyHTML;
 }
 createTable();
 </script>
