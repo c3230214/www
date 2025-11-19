@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Day3 在庫管理アプリ（文化祭ドリンク）</title>
+  <!-- CSS ファイルを読み込む -->
+  <link rel="stylesheet" href="assets/css/inventory.css">
+</head>
+<body>
+  <h1>文化祭ドリンク在庫管理（Day3）</h1>
+  <p>＋／− ボタンを押して在庫数を変更してみましょう。</p>
+
+  <!-- 在庫一覧を表示する表 -->
+  <table>
+    <thead>
+      <tr>
+        <th>商品ID</th>
+        <th>商品名</th>
+        <th>価格（税込）</th>
+        <th>在庫数</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody id="item-list">
+      <!-- JavaScript から自動で行（tr）が追加されます -->
+    </tbody>
+  </table>
+
+  <!-- JavaScript ファイルを一番最後に読み込む -->
+  <script src="assets/js/inventory.js"></script>
+</body>
+</html>
