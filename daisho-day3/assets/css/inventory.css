@@ -1,0 +1,47 @@
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 10px;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5em;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f0f0f0;
+}
+
+/* 在庫が少ない商品の行の見た目 */
+.low-stock {
+  background-color: #ffe0e0;
+}
+
+button {
+  padding: 4px 8px;
+  border: 1px solid #888;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+button + button {
+  margin-left: 4px;
+}
