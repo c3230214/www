@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Obsidian Sync Lab | Ubuntu で同期環境を作る</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body data-page="ubuntu">
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="site-logo">Obsidian Sync Lab</a>
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link nav-link--home">メイン</a>
+          <a href="parp.html" class="nav-link nav-link--parp">PARPディレクトリ</a>
+          <a href="remote-sync.html" class="nav-link nav-link--remote">RemoteSync + S3</a>
+          <a href="ubuntu.html" class="nav-link nav-link--ubuntu">Ubuntu</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <div class="site-main-inner">
+        <section class="hero fade-in">
+          <p class="hero-eyebrow">03 — Ubuntu</p>
+          <h1 class="hero-title">Ubuntu に Obsidian を入れて Remote Sync + S3 で同期する</h1>
+          <p class="hero-subtitle">
+            Ubuntu デスクトップ環境に Obsidian をインストールし、
+            他の端末と同じように Remote Sync + S3 バケットで同期するまでの流れをざっくり整理します。
+          </p>
+        </section>
+
+        <section class="section-grid">
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Install</p>
+            <h2 class="section-card-title">Ubuntu に Obsidian をインストールする</h2>
+            <p class="section-card-desc">
+              もっとも簡単なのは Snap を使う方法です。インターネット接続済みの Ubuntu で、
+              ターミナルから次のコマンドを実行します：
+            </p>
+            <div class="code-block">
+<pre><code>sudo snap install obsidian --classic
+</code></pre>
+            </div>
+            <p class="section-card-desc">
+              インストール後は、アプリケーションメニューに Obsidian が追加されます。
+              AppImage や Flatpak など別の方法もありますが、このサンプルでは Snap を前提にします。
+            </p>
+          </article>
+
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">First Run</p>
+            <h2 class="section-card-title">初回起動とボルト作成</h2>
+            <p class="section-card-desc">
+              Obsidian を起動したら、最初に次のどちらかを選びます：
+            </p>
+            <ul>
+              <li>すでに他の端末で使っているボルトのフォルダを指定する</li>
+              <li>新しいボルトを作成し、あとから Remote Sync で同期する</li>
+            </ul>
+            <p class="section-card-desc">
+              このページでは「他の端末と同期する」前提なので、
+              まだローカルにファイルがない場合は <strong>空のフォルダを作ってボルト化</strong> し、
+              Remote Sync で S3 から中身を持ってくる想定で進めます。
+            </p>
+          </article>
+
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Remote Sync</p>
+            <h2 class="section-card-title">Ubuntu でも Remote Sync + S3 を設定する</h2>
+            <p class="section-card-desc">
+              手順そのものは他の OS と同じで、コミュニティプラグインから Remote Sync を導入し、
+              S3 バケットの情報を入力します。
+            </p>
+            <ul>
+              <li>設定 &rarr; コミュニティプラグイン &rarr; プラグインを探索</li>
+              <li>「Remote Sync」をインストールして有効化</li>
+              <li>Remote Sync の設定で、S3 バケットのリージョン・名前・資格情報を入力</li>
+              <li>暗号化パスワードを、他の端末と同じものに設定</li>
+              <li>初回は「リモートからローカルへ」同期してボルトを埋める</li>
+            </ul>
+            <p class="section-card-desc">
+              Snap 版で権限まわりの問題が出る場合は、公式ドキュメントやフォーラムの情報も確認しつつ、
+              AppImage / Flatpak など他のインストール方法も検討してください。:contentReference[oaicite:9]{index=9}
+            </p>
+          </article>
+
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Tips</p>
+            <h2 class="section-card-title">Ubuntu 端末を「安心して同期に参加させる」ための小ネタ</h2>
+            <ul>
+              <li>最初はテスト用の小さなボルトで同期の挙動を確認する</li>
+              <li>ネットワークが不安定なときは大きな同期を走らせない</li>
+              <li>VS Code の拡張機能など、ボルト内のファイルを同時に触るツールは注意</li>
+              <li>重要な変更を加える前に、S3 とローカル両方のバックアップを取っておく</li>
+            </ul>
+            <p class="section-card-desc">
+              Ubuntu も含めて、どの端末でも「PARP 構成」と「Remote Sync の設定」を揃えておくことで、
+              マルチデバイス環境でも迷いにくいノート環境を維持しやすくなります。
+            </p>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      Snap / AppImage / Flatpak など、Ubuntu でのインストール方法は公式ドキュメントもあわせて確認してください。
+    </footer>
+  </div>
+</body>
+</html>
