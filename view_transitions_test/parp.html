@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Obsidian Sync Lab | PARP メソッドディレクトリ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body data-page="parp">
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="site-logo">Obsidian Sync Lab</a>
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link nav-link--home">メイン</a>
+          <a href="parp.html" class="nav-link nav-link--parp">PARPディレクトリ</a>
+          <a href="remote-sync.html" class="nav-link nav-link--remote">RemoteSync + S3</a>
+          <a href="ubuntu.html" class="nav-link nav-link--ubuntu">Ubuntu</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <div class="site-main-inner">
+        <section class="hero fade-in">
+          <p class="hero-eyebrow">01 — Structure</p>
+          <h1 class="hero-title">PARP メソッドで整える Obsidian ディレクトリ</h1>
+          <p class="hero-subtitle">
+            情報整理術 PARA（Projects / Areas / Resources / Archives）をベースに、
+            Obsidian のボルトのフォルダ構成をシンプルに保つ方法を紹介します。
+            ここでは便宜上、全体を「PARP メソッド」と呼びます。
+          </p>
+        </section>
+
+        <section class="section-grid">
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Concept</p>
+            <h2 class="section-card-title">PARA（PARP）メソッドの考え方</h2>
+            <p class="section-card-desc">
+              PARA メソッドは、「今やっていること」から「いつか役立つかもしれない情報」まで、
+              すべてのノートを次の 4 グループに分けてしまう発想です。
+            </p>
+            <ul>
+              <li><strong>Projects</strong>：期限やゴールがあるタスクのまとまり</li>
+              <li><strong>Areas</strong>：健康・勉強・研究など、継続して責任がある分野</li>
+              <li><strong>Resources</strong>：ネタ帳・リファレンス・資料などのストック</li>
+              <li><strong>Archive</strong>：終わったもの／今すぐは使わないもの</li>
+            </ul>
+            <p class="section-card-desc">
+              「どのフォルダに入れるか迷う時間を減らす」ことが目的なので、
+              完璧さよりも「同じルールを続ける」方が大事です。
+            </p>
+          </article>
+
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Vault Layout</p>
+            <h2 class="section-card-title">Obsidian ボルトのフォルダ構成例</h2>
+            <p class="section-card-desc">
+              Obsidian では、ボルト直下に 4 つのトップフォルダだけを置く構成がよく使われます。
+            </p>
+            <div class="code-block">
+<pre><code>ObsidianVault/
+  01_Projects/
+  02_Areas/
+  03_Resources/
+  04_Archive/   ← ここを「Permanent」として PARP と読むのもアリ
+</code></pre>
+            </div>
+            <p class="section-card-desc">
+              それぞれの中は、自由にサブフォルダを作って構いません。
+              ただし「まずどのトップフォルダに入れるか」を優先して考えると、
+              フォルダ迷子になりにくくなります。
+            </p>
+            <ul>
+              <li>大学の講義ごとのノート → <strong>Projects</strong> または <strong>Areas</strong></li>
+              <li>論文の読みメモ → <strong>Resources</strong></li>
+              <li>終わったゼミ・締め切り済みの課題 → <strong>Archive</strong></li>
+            </ul>
+          </article>
+
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Daily Flow</p>
+            <h2 class="section-card-title">毎日の運用イメージ</h2>
+            <p class="section-card-desc">
+              シンプルな運用例は次のような流れです：
+            </p>
+            <ul>
+              <li>新しいタスク／課題が来たら <strong>Projects</strong> に 1 ノート作る</li>
+              <li>「継続テーマ」（研究テーマ・勉強科目など）は <strong>Areas</strong> に 1 フォルダ</li>
+              <li>役立ちそうな情報・引用はとりあえず <strong>Resources</strong> へ</li>
+              <li>終わったプロジェクトは、フォルダごと <strong>Archive</strong> に移す</li>
+            </ul>
+            <p class="section-card-desc">
+              こうしておくと、Remote Sync + S3 で他の端末と共有しても構造が崩れにくく、
+              どのデバイスから開いても同じ「情報の地図」が見えるようになります。
+            </p>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      PARA メソッドは Tiago Forte 氏による情報整理フレームワークを参考にしています。
+    </footer>
+  </div>
+</body>
+</html>
