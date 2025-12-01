@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Obsidian Sync Lab | Remote Sync + S3 同期</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body data-page="remote">
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="site-logo">Obsidian Sync Lab</a>
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link nav-link--home">メイン</a>
+          <a href="parp.html" class="nav-link nav-link--parp">PARPディレクトリ</a>
+          <a href="remote-sync.html" class="nav-link nav-link--remote">RemoteSync + S3</a>
+          <a href="ubuntu.html" class="nav-link nav-link--ubuntu">Ubuntu</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <div class="site-main-inner">
+        <section class="hero fade-in">
+          <p class="hero-eyebrow">02 — Sync</p>
+          <h1 class="hero-title">Remote Sync プラグインと S3 バケットで同期する</h1>
+          <p class="hero-subtitle">
+            ここでは Remote Sync（Remotely Save 派生プラグイン）と、自分の S3 バケットを使って
+            Obsidian ボルトを端末間で同期するイメージをまとめます。
+            実際に運用する際は、必ず公式ドキュメントと README を確認してください。
+          </p>
+        </section>
+
+        <section class="section-grid">
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Plugin</p>
+            <h2 class="section-card-title">Remote Sync プラグインの概要</h2>
+            <p class="section-card-desc">
+              Remote Sync は、Remotely Save をベースにセキュリティ面の改良を加えたコミュニティプラグインです。
+              Amazon S3 や S3 互換ストレージ、Dropbox、OneDrive 個人用、WebDAV など複数のクラウドに対応し、
+              モバイル版 Obsidian でも動作します。
+            </p>
+            <ul>
+              <li>公式 Obsidian Sync とは別物（サポート対象外）</li>
+              <li>AES-GCM によるエンドツーエンド暗号化オプション</li>
+              <li>手動／一定間隔の自動同期、保存時同期などに対応</li>
+            </ul>
+            <p class="section-card-desc">
+              重要なボルトで試す前に、必ずローカルバックアップを取り、
+              テスト用の小さいボルトで挙動を確認しておくことをおすすめします。
+            </p>
+          </article>
+
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">S3 Bucket</p>
+            <h2 class="section-card-title">S3 バケットを用意する（概要）</h2>
+            <p class="section-card-desc">
+              AWS S3 を例に、Remote Sync と組み合わせるための最小構成をイメージだけ書いておきます。
+            </p>
+            <ul>
+              <li>AWS アカウントを作成し、S3 コンソールで新しいバケットを作成</li>
+              <li>リージョンはすべての端末からアクセスしやすい場所を選択</li>
+              <li>IAM で「そのバケット専用」のユーザーを作成し、アクセスキーを発行</li>
+              <li>バケットポリシーや IAM ポリシーで、必要最低限の権限（読み書き）に絞る</li>
+            </ul>
+            <p class="section-card-desc">
+              実際にコード例付きで手順を解説している記事（Remotely Save + S3 の例）もあるので、
+              運用前に最新情報を確認してください。:contentReference[oaicite:6]{index=6}
+            </p>
+          </article>
+
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Setup</p>
+            <h2 class="section-card-title">Obsidian 側で Remote Sync を設定する</h2>
+            <p class="section-card-desc">
+              Obsidian デスクトップでの基本的な流れは次のようになります（UI はバージョンによって変わる可能性があります）。
+            </p>
+            <ul>
+              <li>Obsidian を開き、歯車アイコンから <strong>設定</strong> を開く</li>
+              <li><strong>コミュニティプラグイン</strong> &rarr; <strong>プラグインを探索</strong> から「Remote Sync」を検索してインストール</li>
+              <li>プラグインを有効化し、「Remote Sync」の設定画面へ</li>
+              <li>クラウドサービスに <strong>Amazon S3 / S3 互換</strong> を選択</li>
+              <li>バケット名・リージョン・アクセスキー ID・シークレットキーなどを入力</li>
+              <li>任意で暗号化パスワードを設定し、テスト接続を実行</li>
+              <li>問題なければ <strong>初回同期</strong> を実行する</li>
+            </ul>
+            <p class="section-card-desc">
+              初回同期では、ローカルとリモートのどちらを正とするか慎重に判断してください。
+              既存バケットに別のデータがある場合は、事前に新しいバケットを切る方が安全です。
+            </p>
+          </article>
+
+          <article class="section-card fade-in">
+            <p class="section-card-kicker">Multi-device</p>
+            <h2 class="section-card-title">端末ごとの同期設定のコツ</h2>
+            <p class="section-card-desc">
+              2 台以上の端末で同じボルトを使うときの、典型的な手順イメージです。
+            </p>
+            <p class="section-heading">1 台目（「親」端末）</p>
+            <ul>
+              <li>ローカルにボルトを作成し、PARP 構成でフォルダを整える</li>
+              <li>Remote Sync + S3 を設定して <strong>最初のアップロード</strong> を実行</li>
+            </ul>
+            <p class="section-heading">2 台目以降</p>
+            <ul>
+              <li>Obsidian をインストールし、空のボルト or 新しいフォルダを用意</li>
+              <li>同じように Remote Sync プラグインをインストール</li>
+              <li>同じバケット・リージョン・アクセスキー・暗号化パスワードを設定</li>
+              <li>Remote Sync の「同期」または「リモートから取得」を実行して内容をダウンロード</li>
+            </ul>
+            <p class="section-card-desc">
+              基本的には「どの端末でも同じ S3 バケットを共有し、Remote Sync が仲介してくれる」
+              というイメージです。実運用では、Wi‑Fi の安定した環境でのテストを強くおすすめします。
+            </p>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      Remote Sync / Remotely Save はコミュニティプラグインであり、利用は自己責任で行ってください。
+    </footer>
+  </div>
+</body>
+</html>
