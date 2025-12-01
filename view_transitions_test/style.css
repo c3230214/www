@@ -1,0 +1,308 @@
+/* --------------------------
+   View Transitions（MPA 用）
+   -------------------------- */
+
+/* ページ遷移時に View Transition を使う */
+@view-transition {
+  navigation: auto;
+}
+
+/* 全体のクロスフェード＋ちょっとズーム */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: vt-fade-scale 0.35s ease-out;
+}
+
+@keyframes vt-fade-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 動きを減らしたいユーザーにはアニメーションを切る */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* --------------------------
+   ベーススタイル
+   -------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e5e7eb;
+  background:
+    radial-gradient(circle at top, #1f2937 0, #020617 60%);
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.site-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------
+   ヘッダー / ナビゲーション
+   -------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  background: rgba(15, 23, 42, 0.9);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.site-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-logo {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.nav-link {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.nav-link:hover {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(148, 163, 184, 0.7);
+}
+
+/* 現在ページのハイライト */
+body[data-page="home"] .nav-link--home,
+body[data-page="parp"] .nav-link--parp,
+body[data-page="remote"] .nav-link--remote,
+body[data-page="ubuntu"] .nav-link--ubuntu {
+  background: linear-gradient(135deg, #38bdf8, #a855f7);
+  color: #020617;
+  border-color: transparent;
+}
+
+/* --------------------------
+   メインコンテンツ
+   -------------------------- */
+
+.site-main {
+  flex: 1;
+}
+
+.site-main-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3.5rem;
+}
+
+/* ヒーロー部分 */
+.hero {
+  margin-bottom: 2.5rem;
+}
+
+.hero-eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 0.4rem;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5rem;
+}
+
+.hero-subtitle {
+  max-width: 40rem;
+  color: #d1d5db;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+/* セクションカード */
+.section-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 720px) {
+  .section-grid--columns-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.section-card {
+  background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 55%),
+              rgba(15, 23, 42, 0.95);
+  border-radius: 1.1rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow:
+    0 18px 35px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(15, 23, 42, 0.9);
+  padding: 1.4rem 1.4rem 1.6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-card--link:hover {
+  outline: 0;
+  text-decoration: none;
+}
+
+.section-card-kicker {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #9ca3af;
+  margin-bottom: 0.3rem;
+}
+
+.section-card-title {
+  font-size: 1.1rem;
+  margin: 0 0 0.4rem;
+}
+
+.section-card-desc {
+  font-size: 0.92rem;
+  color: #d1d5db;
+  margin: 0 0 0.6rem;
+  line-height: 1.6;
+}
+
+.section-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.badge {
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  color: #e5e7eb;
+}
+
+/* コードブロック風 */
+.code-block {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 0.7rem;
+  border: 1px solid rgba(55, 65, 81, 0.9);
+  padding: 0.8rem 1rem;
+  overflow-x: auto;
+  margin-top: 0.6rem;
+  line-height: 1.5;
+}
+
+/* 箇条書き */
+.section-card ul {
+  margin: 0.4rem 0 0.4rem 1.1rem;
+  padding: 0;
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+/* 小さな見出し */
+.section-heading {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.3rem 0 0.2rem;
+}
+
+/* フッター */
+.site-footer {
+  border-top: 1px solid rgba(148, 163, 184, 0.4);
+  padding: 0.9rem 1.5rem 1.1rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.95);
+}
+
+/* --------------------------
+   スクロール時のフェードイン
+   -------------------------- */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out,
+    box-shadow 0.3s ease-out,
+    border-color 0.3s ease-out;
+  will-change: opacity, transform;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ホバー時に少しだけ浮かせる */
+.section-card.section-card--link.is-visible:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 22px 45px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(59, 130, 246, 0.9);
+  border-color: rgba(129, 140, 248, 0.9);
+}
