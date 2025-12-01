@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Obsidian Sync Lab | メイン</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body data-page="home">
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a href="index.html" class="site-logo">Obsidian Sync Lab</a>
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link nav-link--home">メイン</a>
+          <a href="parp.html" class="nav-link nav-link--parp">PARPディレクトリ</a>
+          <a href="remote-sync.html" class="nav-link nav-link--remote">RemoteSync + S3</a>
+          <a href="ubuntu.html" class="nav-link nav-link--ubuntu">Ubuntu</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <div class="site-main-inner">
+        <section class="hero fade-in">
+          <p class="hero-eyebrow">Obsidian × 自前同期</p>
+          <h1 class="hero-title">Obsidian Sync Lab</h1>
+          <p class="hero-subtitle">
+            このミニサイトでは、メモアプリ Obsidian を題材に、
+            PARA(P) メソッドによるディレクトリ設計、Remote Sync プラグインと S3 バケットを使った自己ホスト型同期、
+            さらに Ubuntu 環境でのセットアップまでをまとめて紹介します。
+          </p>
+        </section>
+
+        <section class="section-grid">
+          <a href="parp.html" class="section-card section-card--link fade-in">
+            <p class="section-card-kicker">01 — Structure</p>
+            <h2 class="section-card-title">PARP メソッドで組む Obsidian ディレクトリ</h2>
+            <p class="section-card-desc">
+              Projects / Areas / Resources / Archive をベースにした情報整理術
+              PARA（ここでは PARP）メソッドを、Obsidian のフォルダ構成に落とし込みます。
+              実際のディレクトリ例と運用イメージ付き。
+            </p>
+            <div class="section-card-meta">
+              <span class="badge">PARA / PARP</span>
+              <span class="badge">フォルダ設計</span>
+            </div>
+          </a>
+
+          <a href="remote-sync.html" class="section-card section-card--link fade-in">
+            <p class="section-card-kicker">02 — Sync</p>
+            <h2 class="section-card-title">Remote Sync プラグイン + S3 同期</h2>
+            <p class="section-card-desc">
+              Obsidian 公式 Sync を使わずに、
+              Remote Sync（Remotely Save 派生プラグイン）と Amazon S3 互換のストレージを使って
+              自前で同期環境を構築する流れを整理します。
+              端末ごとの設定のポイントも。
+            </p>
+            <div class="section-card-meta">
+              <span class="badge">コミュニティプラグイン</span>
+              <span class="badge">S3 バケット</span>
+            </div>
+          </a>
+
+          <a href="ubuntu.html" class="section-card section-card--link fade-in">
+            <p class="section-card-kicker">03 — Ubuntu</p>
+            <h2 class="section-card-title">Ubuntu に Obsidian を入れて同期する</h2>
+            <p class="section-card-desc">
+              Ubuntu 上に Obsidian をインストールする方法（Snap や AppImage）と、
+              Remote Sync + S3 を使って他の端末と同じボルトを同期する手順をまとめます。
+            </p>
+            <div class="section-card-meta">
+              <span class="badge">Linux デスクトップ</span>
+              <span class="badge">マルチデバイス</span>
+            </div>
+          </a>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      Obsidian は Obsidian.md の商標です。本サイトの内容は個人による検証メモのサンプルです。
+    </footer>
+  </div>
+</body>
+</html>
