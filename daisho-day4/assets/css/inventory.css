@@ -1,0 +1,178 @@
+/* ===== ベーススタイル ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Yu Gothic", "Meiryo", system-ui, -apple-system, sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* コンテナ */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+/* 見出し */
+.title {
+  margin: 4px 0 2px;
+  font-size: clamp(22px, 2.4vw, 28px);
+}
+
+.muted {
+  margin: 0 0 16px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* パネル */
+.panel {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px 18px 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.panel-title {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+/* ヒントテキスト */
+.hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ===== 在庫テーブル ===== */
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.inventory-table thead {
+  background: #f9fafb;
+}
+
+.inventory-table th,
+.inventory-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.inventory-table th {
+  font-weight: 600;
+  color: #374151;
+}
+
+.inventory-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+/* 在庫が少ない行に付けるクラス */
+.low-stock {
+  background: #fef2f2 !important;
+}
+
+/* ===== 下部の操作ボタン（保存 / メール） ===== */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  gap: 6px;
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+}
+
+.btn-ghost {
+  background: #ffffff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+/* ===== 在庫テーブル内の＋／−ボタン調整 ===== */
+.inventory-table td button {
+  width: 32px;              /* ＋と−の幅を固定して同じにする */
+  height: 32px;             /* 高さもそろえる */
+  border-radius: 999px;     /* まるいボタン */
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;               /* 余白は幅・高さに任せる */
+}
+
+.inventory-table td button + button {
+  margin-left: 4px;         /* ＋と−の間に少し余白 */
+}
+
+.inventory-table td button:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+
+/* ===== スマホ対応 ===== */
+@media (max-width: 640px) {
+  .panel {
+    padding: 14px 12px 18px;
+  }
+
+  .inventory-table th,
+  .inventory-table td {
+    padding: 6px 8px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn,
+  .btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+}
