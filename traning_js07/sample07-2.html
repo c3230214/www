@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>要素の追加と削除</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>要素の追加と削除</title>
 </head>
 <body>
-    <h1>写真の一覧</h1>
-    <p>以下のボタンをクリックすると、写真が一覧表示されます。</p>
-    <button class="images" onclick="upImage()">写真を表示</button>
-    <div id="photoList"></div>
-    <script>
-        function upImage() {
-            const photoList = document.getElementById('photoList');
-            const images = ['images2/photo_1.jpg', 'images2/photo_2.jpg', 'images2/photo_3.jpg', 'images2/photo_4.jpg', 'images2/photo_5.jpg', 'images2/photo_6.jpg', 'images2/photo_7.jpg', 'images2/photo_8.jpg'];
-            images.forEach(src => {
-                const imgHTML = `<img src="${src}" style="width: 200px; margin: 3px;">`;
-                photoList.insertAdjacentHTML('beforeend', imgHTML);
-            });
-        }
-    </script>
+  <h1>写真の一覧</h1>
+  <p>以下のボタンをクリックすると、写真が一覧表示されます。</p>
+  <button class="images" onclick="upImage()">写真を表示</button>
+  <div id="photoList"></div>
+  <script>
+    function upImage() {
+      const photoList = document.getElementById('photoList');
+      for (let i = 1; i <= 8; i++) {
+        const src = `images2/photo_${i}.jpg`;
+        const imgHTML = `<img src="${src}" style="width: 200px; margin: 3px;">`;
+        photoList.insertAdjacentHTML('beforeend', imgHTML);
+      }
+    }
+  </script>
 </body>
 </html>
