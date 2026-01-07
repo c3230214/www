@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>要素の追加と削除</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>写真の一覧</title>
+  <p>以下のボタンをクリックすると、写真が一覧表示されます。</p>
 </head>
 <body>
-  <h1>写真の一覧</h1>
-  <p>以下のボタンをクリックすると、写真が一覧表示されます。</p>
-  <button class="images" onclick="upImage()">写真を表示</button>
+  <button onclick="upImage(this)">写真を表示</button>
   <div id="photoList"></div>
   <script>
-    function upImage() {
-      const photoList = document.getElementById('photoList');
-      for (let i = 1; i <= 8; i++) {
-        const src = `images2/photo_${i}.jpg`;
-        const imgHTML = `<img src="${src}" style="width: 200px; margin: 3px;">`;
-        photoList.insertAdjacentHTML('beforeend', imgHTML);
-      }
+    function upImage(btn){
+      const list=document.getElementById('photoList');
+      let h='';
+      for(let i=1;i<=8;i++) 
+        h+=`<img src="images2/photo_${i}.jpg" style="width:200px;margin:3px;">`;
+      list.innerHTML=h;
+      btn.disabled=true;
     }
   </script>
 </body>
