@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="view-transition" content="same-origin" />
+  <title>AI Master Cafe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    @view-transition {
+      navigation: auto;
+    }
+
+    ::view-transition-old(root) { animation: fade-out 0.25s ease-out; }
+    ::view-transition-new(root) { animation: fade-in 0.25s ease-in; }
+
+    ::view-transition-old(card-1),
+    ::view-transition-old(card-2),
+    ::view-transition-old(card-3),
+    ::view-transition-old(card-4),
+    ::view-transition-old(card-bonus) {
+      animation: slide-out 0.3s ease-out;
+    }
+
+    ::view-transition-new(card-1),
+    ::view-transition-new(card-2),
+    ::view-transition-new(card-3),
+    ::view-transition-new(card-4),
+    ::view-transition-new(card-bonus) {
+      animation: slide-in 0.3s ease-in;
+    }
+
+    @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slide-out {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.98); }
+    }
+    @keyframes slide-in {
+      from { opacity: 0; transform: scale(1.02); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-base: #f6f5f1;
+      --bg-paper: #ffffff;
+      --ink-900: #15171c;
+      --ink-700: #2d3038;
+      --ink-500: #5a5e68;
+      --ink-400: #8a8e98;
+      --line-200: rgba(21, 23, 28, 0.08);
+      --line-300: rgba(21, 23, 28, 0.14);
+      --accent: #b54a2b;
+
+      /* Frosted glass tokens — Mizuho-campaign-style: dense whitish veil with
+         moderate blur. The high opacity is the key — it makes the bar read
+         as a clean glass surface even where backgrounds are flat, and
+         hides background text reliably even when blur is mild. */
+      --glass-bg: rgba(255, 255, 255, 0.86);
+      --glass-border: rgba(21, 23, 28, 0.06);
+      --glass-blur: blur(20px) saturate(160%);
+      --glass-shadow: 0 8px 32px rgba(21, 23, 28, 0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
+      background: var(--bg-base);
+      min-height: 100vh;
+      color: var(--ink-900);
+      line-height: 1.75;
+      padding-top: 64px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Full-width sticky frosted header (Mizuho-campaign-style).
+       width: 100% + left/right: 0 ensures it spans the full viewport.
+       The bottom edge uses a soft shadow rather than a hairline border for
+       a softer, modern feel — closer to the campaign-site look than a
+       hard 1px line. */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 1000;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-bottom: none;
+      box-shadow: 0 1px 0 rgba(21, 23, 28, 0.04), 0 4px 18px rgba(21, 23, 28, 0.05);
+    }
+
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      header { background: rgba(255, 255, 255, 0.96); }
+    }
+
+    .header-content {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink-900);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--ink-900);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      position: relative;
+    }
+
+    nav button, nav a {
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--ink-700);
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s ease;
+      font-family: inherit;
+    }
+
+    .about-btn {
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid var(--ink-900) !important;
+      color: var(--ink-900);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .about-btn:hover,
+    .about-btn[aria-expanded="true"] {
+      background: var(--ink-900);
+      color: var(--bg-base);
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+      border-bottom: 1px solid var(--line-200);
+    }
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 1.75rem;
+      display: inline-block;
+    }
+
+    .hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(2.4rem, 6.5vw, 5rem);
+      font-weight: 600;
+      color: var(--ink-900);
+      margin-bottom: 1.75rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 980px;
+      min-height: 1.15em; /* reserve space to prevent reflow during scramble */
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--ink-700);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    /* Articles */
+    .articles {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .section-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink-900);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.005em;
+      min-height: 1.2em;
+    }
+
+    .section-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink-500);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--line-300);
+    }
+
+    /* Cards — uniform style for all (bonus included) */
+    .article-card {
+      background: var(--bg-paper);
+      border: 1px solid var(--line-200);
+      border-radius: 14px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 1.25rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+      box-shadow: 0 1px 2px rgba(21, 23, 28, 0.02);
+    }
+
+    .article-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--ink-900);
+      box-shadow: 0 8px 24px rgba(21, 23, 28, 0.06);
+    }
+
+    .card-1 { view-transition-name: card-1; }
+    .card-2 { view-transition-name: card-2; }
+    .card-3 { view-transition-name: card-3; }
+    .card-4 { view-transition-name: card-4; }
+    .card-bonus { view-transition-name: card-bonus; }
+
+    .article-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .article-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ink-500);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .article-divider {
+      width: 1px;
+      height: 12px;
+      background: var(--line-300);
+    }
+
+    .article-category {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+
+    .article-card h2 {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--ink-900);
+      margin-bottom: 0.85rem;
+      line-height: 1.45;
+      letter-spacing: -0.005em;
+    }
+
+    .article-card p {
+      color: var(--ink-500);
+      font-size: 0.93rem;
+      line-height: 1.85;
+    }
+
+    .read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--ink-900);
+      font-weight: 500;
+      font-size: 0.82rem;
+      margin-top: 1.5rem;
+      letter-spacing: 0.04em;
+      transition: gap 0.25s ease;
+    }
+
+    .read-more::after {
+      content: '→';
+      transition: transform 0.25s ease;
+    }
+
+    .article-card:hover .read-more { color: var(--accent); }
+    .article-card:hover .read-more::after { transform: translateX(4px); }
+
+    /* Footer */
+    footer {
+      max-width: 1120px;
+      margin: 4rem auto 0;
+      padding: 2.5rem 2rem 3rem;
+      border-top: 1px solid var(--line-200);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink-900);
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: var(--ink-500);
+      line-height: 1.7;
+    }
+
+    .footer-meta a {
+      color: var(--ink-700);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line-300);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .footer-meta a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Compact frosted-glass About popover */
+    .about-popover {
+      position: fixed;
+      top: 72px;
+      right: 1.25rem;
+      width: min(320px, calc(100vw - 2rem));
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 1.25rem 1.35rem 1.35rem;
+      box-shadow: var(--glass-shadow);
+      z-index: 1100;
+      opacity: 0;
+      transform: translateY(-6px) scale(0.98);
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .about-popover { background: rgba(246, 245, 241, 0.96); }
+    }
+
+    .about-popover.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .about-popover h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-500);
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .about-popover p {
+      color: var(--ink-700);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin-bottom: 0.9rem;
+    }
+
+    .popover-email {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.83rem;
+      color: var(--ink-900);
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--line-300);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.4);
+      word-break: break-all;
+      text-decoration: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .popover-email:hover { border-color: var(--ink-900); }
+
+    /* Invisible click-catcher for closing the popover */
+    .popover-backdrop {
+      position: fixed;
+      inset: 0;
+      background: transparent;
+      z-index: 1050;
+      display: none;
+    }
+
+    .popover-backdrop.active { display: block; }
+
+    .scramble { display: inline-block; }
+
+    @media (max-width: 768px) {
+      .header-content { padding: 0 1.25rem; }
+      nav { gap: 0.75rem; }
+      .about-btn { padding: 0.4rem 0.85rem; font-size: 0.72rem; }
+      .hero { padding: 3.5rem 1.25rem 2.5rem; }
+      .articles { padding: 2.5rem 1.25rem 1rem; }
+      .article-card { padding: 1.5rem 1.5rem; }
+      .article-card h2 { font-size: 1.15rem; }
+      footer { padding: 2rem 1.25rem 2.5rem; }
+      .about-popover { right: 1rem; top: 68px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .article-card, .read-more::after, .about-popover {
+        transition: none !important;
+      }
+    }
+    :root {
+      --header-height: 64px;
+      --safe-top: env(safe-area-inset-top, 0px);
+
+      --glass-bg: rgba(246, 245, 241, 0.46);
+      --glass-border: rgba(255, 255, 255, 0.58);
+      --glass-edge: rgba(21, 23, 28, 0.10);
+      --glass-shadow: 0 10px 28px rgba(21, 23, 28, 0.08);
+    }
+
+    html {
+      background: #f6f5f1;
+    }
+
+    body {
+      padding-top: calc(var(--header-height) + var(--safe-top));
+      background:
+      radial-gradient(circle at 14% -12%, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0) 32rem),
+      linear-gradient(180deg, #f7f6f2 0%, #f1efe9 100%);
+      position: relative;
+    }
+
+    body::before,
+    header::before,
+    header::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      min-height: calc(var(--header-height) + var(--safe-top));
+      padding-top: var(--safe-top);
+      z-index: 1000;
+
+      background-color: var(--glass-bg);
+      background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.20) 100%),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.06) 48%, rgba(255, 255, 255, 0.18) 100%);
+      background-size: 140px 140px, 100% 100%, 100% 100%;
+      background-repeat: repeat, no-repeat, no-repeat;
+
+      -webkit-backdrop-filter: blur(24px) saturate(175%);
+      backdrop-filter: blur(24px) saturate(175%);
+
+      border-bottom: 1px solid var(--glass-edge);
+      box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.78),
+      inset 0 -1px 0 rgba(21, 23, 28, 0.04),
+      0 8px 22px rgba(21, 23, 28, 0.06);
+
+      transform: none !important;
+      -webkit-transform: none !important;
+      will-change: auto !important;
+      isolation: auto !important;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+      height: var(--header-height);
+    }
+
+  .about-popover {
+  top: calc(var(--header-height) + var(--safe-top) + 8px);
+  right: calc(1.25rem + env(safe-area-inset-right, 0px));
+
+  background-color: rgba(246, 245, 241, 0.62);
+  background-image:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+  linear-gradient(180deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.24) 100%);
+  background-size: 140px 140px, 100% 100%;
+  background-repeat: repeat, no-repeat;
+
+  -webkit-backdrop-filter: blur(24px) saturate(175%);
+  backdrop-filter: blur(24px) saturate(175%);
+
+  border: 1px solid var(--glass-border);
+  box-shadow:
+  var(--glass-shadow),
+  inset 0 1px 0 rgba(255, 255, 255, 0.72);
+
+  transform: translateY(-6px) scale(0.98);
+  }
+
+  .about-popover.active {
+  transform: translateY(0) scale(1);
+  }
+
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  header {
+  background-color: rgba(246, 245, 241, 0.92);
+  background-image:
+  linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.42) 100%);
+  }
+
+  .about-popover {
+  background-color: rgba(246, 245, 241, 0.94);
+  background-image: none;
+  }
+  }
+
+  @media (max-width: 768px) {
+  .about-popover {
+  right: calc(1rem + env(safe-area-inset-right, 0px));
+  top: calc(var(--header-height) + var(--safe-top) + 6px);
+  }
+}
+
+
+  </style>
+</head>
+<body>
+  <!-- Frosted Glass Header -->
+  <header>
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">AM</span>
+        AI Master Cafe
+      </a>
+      <nav id="nav">
+        <button class="about-btn" id="aboutBtn" aria-expanded="false" aria-controls="aboutPopover">About</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- About popover -->
+  <div class="popover-backdrop" id="popoverBackdrop"></div>
+  <div class="about-popover" id="aboutPopover" role="dialog" aria-label="About AI Master Cafe">
+    <h3>About</h3>
+    <p>AI Master Cafe は、最新のAIツールの使い方を、実際に触りながら学習した記録を公開するミニサイトです。AWS学習の一環として作成しました。</p>
+    <a href="mailto:kitagawa@aimastercafe.click" class="popover-email">kitagawa@aimastercafe.click</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <span class="hero-eyebrow">AI Learning Notes</span>
+    <h1><span class="scramble" data-scramble="Practical Notes on Modern AI Tools.">Practical Notes on Modern AI Tools.</span></h1>
+    <p class="hero-subtitle">
+      NotebookLM、Gemini、ChatGPT、Grok など、日々アップデートされるAIツールの使い方を、実際に触りながら整理した記録です。学習の途中経過として公開しています。
+    </p>
+  </section>
+
+  <!-- Articles Section -->
+  <section class="articles" id="articles">
+    <h2 class="section-title"><span class="scramble" data-scramble="Articles">Articles</span></h2>
+    <p class="section-meta">All Notes</p>
+
+    <a href="notebooklm.html" class="article-card card-1">
+      <div class="article-meta-row">
+        <span class="article-number">No. 01</span>
+        <span class="article-divider"></span>
+        <span class="article-category">Google AI / NotebookLM</span>
+      </div>
+      <h2>NotebookLM の使い方ガイド</h2>
+      <p>
+        Google が提供する AI ノートツール「NotebookLM」を使えば、PDF やドキュメントをアップロードするだけで、内容を要約したり、質問に答えてもらったりできます。研究論文のリサーチ、長文レポートの整理、会議議事録の要点抽出など、実務での活用法を整理しました。
+      </p>
+      <span class="read-more">続きを読む</span>
+    </a>
+
+    <a href="gemini.html" class="article-card card-2">
+      <div class="article-meta-row">
+        <span class="article-number">No. 02</span>
+        <span class="article-divider"></span>
+        <span class="article-category">Gemini Family</span>
+      </div>
+      <h2>Gemini の nanobanana Pro について</h2>
+      <p>
+        Gemini ファミリーに新たに加わった「nanobanana Pro」は、軽量かつ高速な推論が可能なモデルです。エッジデバイスやモバイル環境での実行を想定しており、オフライン環境でも動作可能。実機での挙動と、想定される使いどころを整理します。
+      </p>
+      <span class="read-more">続きを読む</span>
+    </a>
+
+    <a href="obsidian-chatgpt.html" class="article-card card-3">
+      <div class="article-meta-row">
+        <span class="article-number">No. 03</span>
+        <span class="article-divider"></span>
+        <span class="article-category">PKM × ChatGPT</span>
+      </div>
+      <h2>Obsidian ナレッジベースと ChatGPT でアイデアを創出</h2>
+      <p>
+        Obsidian で構築した個人ナレッジベース（PKM）と ChatGPT を連携させることで、過去のメモや発想を AI が分析し、新しいアイデアやインサイトを提案してくれます。実際の連携手順と運用上の注意点をまとめました。
+      </p>
+      <span class="read-more">続きを読む</span>
+    </a>
+
+    <a href="grok.html" class="article-card card-4">
+      <div class="article-meta-row">
+        <span class="article-number">No. 04</span>
+        <span class="article-divider"></span>
+        <span class="article-category">xAI / Grok</span>
+      </div>
+      <h2>Grok のアバターについて</h2>
+      <p>
+        xAI が開発した Grok には、ユニークなアバター機能が搭載されています。会話のトーンやスタイルに合わせてアバターの表情や雰囲気が変化し、より人間らしいインタラクションを実現する仕組みを掘り下げます。
+      </p>
+      <span class="read-more">続きを読む</span>
+    </a>
+
+    <a href="milktea.html" class="article-card card-bonus">
+      <div class="article-meta-row">
+        <span class="article-number">No. 05</span>
+        <span class="article-divider"></span>
+        <span class="article-category">Break Time</span>
+      </div>
+      <h2>【おまけ】おいしいミルクティーを手軽に作る方法</h2>
+      <p>
+        AI の話ばかりでは疲れてしまうので、ここでブレイクタイム。簡単でおいしいミルクティーのレシピと、作業中の集中を保つための小さな工夫を紹介します。
+      </p>
+      <span class="read-more">続きを読む</span>
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div>
+        <p class="footer-brand">AI Master Cafe</p>
+        <p class="footer-meta">Notes on AI tools, written while learning AWS.</p>
+      </div>
+      <div>
+        <p class="footer-meta">
+          © 2024 AI Master Cafe<br />
+          <a href="https://www.aimastercafe.click">www.aimastercafe.click</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ---------- About popover (registered via addEventListener for safety) ---------- */
+    (function () {
+      const aboutBtn = document.getElementById('aboutBtn');
+      const aboutPopover = document.getElementById('aboutPopover');
+      const popoverBackdrop = document.getElementById('popoverBackdrop');
+
+      if (!aboutBtn || !aboutPopover || !popoverBackdrop) return;
+
+      function openPopover() {
+        aboutPopover.classList.add('active');
+        popoverBackdrop.classList.add('active');
+        aboutBtn.setAttribute('aria-expanded', 'true');
+      }
+      function closePopover() {
+        aboutPopover.classList.remove('active');
+        popoverBackdrop.classList.remove('active');
+        aboutBtn.setAttribute('aria-expanded', 'false');
+      }
+      function togglePopover() {
+        if (aboutPopover.classList.contains('active')) closePopover();
+        else openPopover();
+      }
+
+      aboutBtn.addEventListener('click', togglePopover);
+      popoverBackdrop.addEventListener('click', closePopover);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closePopover();
+      });
+    })();
+
+    /* ---------- Scramble text animation ----------
+       Each letter cycles through random glyphs, then locks into the final
+       character. Indexes lock progressively from left to right. Punctuation
+       and spaces lock immediately. */
+    (function () {
+      const SCRAMBLE_POOL = 'abcdefghijklmnopqrstuvwxyz';
+      const baseDelay = 55;        // ms between each char's lock-in
+      const scrambleWindow = 700;  // ms each char keeps scrambling
+
+      function runScramble(el) {
+        const finalText = el.dataset.scramble || el.textContent;
+        const chars = Array.from(finalText);
+        const length = chars.length;
+        const startTime = performance.now();
+
+        function frame(now) {
+          const elapsed = now - startTime;
+          let allDone = true;
+          let out = '';
+          for (let i = 0; i < length; i++) {
+            const ch = chars[i];
+            const lockAt = i * baseDelay + scrambleWindow;
+            const isLetter = /[A-Za-z]/.test(ch);
+            if (elapsed >= lockAt || !isLetter) {
+              out += ch;
+            } else {
+              allDone = false;
+              const r = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
+              out += (ch === ch.toUpperCase()) ? r.toUpperCase() : r;
+            }
+          }
+          el.textContent = out;
+          if (!allDone) requestAnimationFrame(frame);
+          else el.textContent = finalText;
+        }
+        requestAnimationFrame(frame);
+      }
+
+      function init() {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const targets = document.querySelectorAll('.scramble');
+        if (reduce) {
+          targets.forEach(function (t) { t.textContent = t.dataset.scramble || t.textContent; });
+          return;
+        }
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !entry.target.dataset.played) {
+              entry.target.dataset.played = '1';
+              runScramble(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.4, rootMargin: '0px 0px -10% 0px' });
+
+        targets.forEach(function (t) {
+          const finalText = t.dataset.scramble || t.textContent;
+          t.dataset.scramble = finalText;
+          observer.observe(t);
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>
